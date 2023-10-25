@@ -1,0 +1,60 @@
+version: '2'
+
+services:
+    redis:
+        restart: always
+        image: redis
+        networks:
+            bbnetwork:
+                ipv4_address: "10.30.20.20"
+        ports:
+            - "6379:6379"
+    mongodb-pri:
+        restart: always
+        container_name: mongodb-pri
+        command: ["mongod","-f","/etc/mongod.conf"]
+        image: percona/percona-server-mongodb:5.0
+        volumes:
+            - mongodb-pri:/data/db
+            - /home/vagrant/mongod.conf:/etc/mongod.conf
+        networks:
+            bbnetwork:
+                ipv4_address: "10.30.20.10"
+        ports:
+            - "27017:27017"
+    mongodb-sec:
+        restart: always
+        container_name: mongodb-sec
+        command: ["mongod","-f","/etc/mongod.conf"]
+        image: percona/percona-server-mongodb:5.0
+        volumes:
+            - mongodb-sec:/data/db
+            - /home/vagrant/mongod.conf:/etc/mongod.conf
+        networks:
+            bbnetwork:
+                ipv4_address: "10.30.20.11"
+        ports:
+            - "27018:27017"
+    dev:
+        restart: always
+        image: 76077e6/dev:2.0
+        networks:
+            bbnetwork:
+                ipv4_address: "10.30.20.100"
+        ports:
+            - "22022:22"
+            - "3000:3000"
+networks:
+    bbnetwork:
+        ipam:
+            driver: default
+            config:
+                - subnet: "10.30.20.0/24"
+volumes:
+    mongodb-pri:
+        external: true
+    mongodb-sec:
+        external: true
+    mongod.conf:
+        external: true
+
