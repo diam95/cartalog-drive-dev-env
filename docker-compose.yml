@@ -16,7 +16,7 @@ services:
         image: percona/percona-server-mongodb:5.0
         volumes:
             - mongodb-pri:/data/db
-            - /home/vagrant/mongod.conf:/etc/mongod.conf
+            - /home/ubuntu/vagrant/mongod.conf:/etc/mongod.conf
         networks:
             bbnetwork:
                 ipv4_address: "10.30.20.10"
@@ -29,7 +29,7 @@ services:
         image: percona/percona-server-mongodb:5.0
         volumes:
             - mongodb-sec:/data/db
-            - /home/vagrant/mongod.conf:/etc/mongod.conf
+            - /home/ubuntu/vagrant/mongod.conf:/etc/mongod.conf
         networks:
             bbnetwork:
                 ipv4_address: "10.30.20.11"
@@ -44,6 +44,7 @@ services:
         ports:
             - "22022:22"
             - "3000:3000"
+            - "8080:8080"
 networks:
     bbnetwork:
         ipam:
