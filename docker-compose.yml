@@ -35,7 +35,7 @@ services:
                 ipv4_address: "10.30.20.11"
         ports:
             - "27018:27017"
-    dev:
+    server:
         restart: always
         image: 76077e6/dev:2.0
         networks:
@@ -44,7 +44,17 @@ services:
         ports:
             - "22022:22"
             - "3000:3000"
-            - "8080:8080"
+    fleet-control:
+        restart: always
+        image: 76077e6/dev:2.0
+        extra_hosts:
+            - "bbhub.local:10.30.20.100"
+        networks:
+            bbnetwork:
+                ipv4_address: "10.30.20.101"
+        ports:
+            - "22023:22"
+            - "3001:3001"
 networks:
     bbnetwork:
         ipam:

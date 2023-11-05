@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.box = "ubuntu/focal64"
   config.vm.box_download_insecure=true
-  config.disksize.size = '30GB'
+  config.disksize.size = '60GB'
   config.vm.network "forwarded_port", guest: 3000, host: 3000, host_ip: "127.0.0.1"
   config.vm.network "forwarded_port", guest: 3001, host: 3001, host_ip: "127.0.0.1"
   config.vm.network "forwarded_port", guest: 3002, host: 3002, host_ip: "127.0.0.1"
