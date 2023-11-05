@@ -55,7 +55,7 @@ Vagrant.configure("2") do |config|
 
   # Wait dockers to start
     sleep 10
-    while [ "$(docker ps -q|wc -l)" -ne "4" ]; do echo "Waiting for dockers to start";sleep 1; done
+    while [ "$(docker ps -q|wc -l)" -ne "5" ]; do echo "Waiting for dockers to start";sleep 1; done
   # Make the Replica
     mongo --quiet --eval 'rs.initiate({_id : "replica01", members : [{_id : 0, host : "10.30.20.10:27017",priority : 10},{_id : 1, host : "10.30.20.11:27017",priority : 5}]})'
   # Wait Mongo cluster to start
