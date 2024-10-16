@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
     redis:
@@ -55,6 +55,21 @@ services:
         ports:
             - "22023:22"
             - "3001:3001"
+    mqtt:
+        restart: always
+        image: eclipse-mosquitto
+        volumes:
+            - mosquitto_data:/mosquitto/data
+            - mosquitto_log:/mosquitto/log
+            - /home/vagrant/mqtt.conf:/mosquitto/config/mosquitto.conf
+        ports:
+            - "1883:1883"
+            - "9001:9001"
+        extra_hosts:
+            - "bbhub.local:10.30.20.100"
+        networks:
+            bbnetwork:
+                ipv4_address: "10.30.20.102"
 networks:
     bbnetwork:
         ipam:
@@ -68,4 +83,9 @@ volumes:
         external: true
     mongod.conf:
         external: true
-
+    mqtt.conf:
+        external: true
+    mosquitto_data:
+        external: true
+    mosquitto_log:
+        external: true

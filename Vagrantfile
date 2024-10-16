@@ -22,6 +22,8 @@ Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 27017, host: 27018, host_ip: "127.0.0.1"
   config.vm.network "forwarded_port", guest: 22022, host: 22022, host_ip: "127.0.0.1"
   config.vm.network "forwarded_port", guest: 22023, host: 22023, host_ip: "127.0.0.1"
+  config.vm.network "forwarded_port", guest: 1883, host: 1883, host_ip: "127.0.0.1"
+  config.vm.network "forwarded_port", guest: 9001, host: 9001, host_ip: "127.0.0.1"
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "4096"
     vb.cpus = 4
@@ -47,6 +49,10 @@ Vagrant.configure("2") do |config|
     docker volume create mongodb-pri
     docker volume create mongodb-sec
     docker volume create mongod.conf
+    docker volume create mqtt.conf
+    docker volume create mosquitto_data
+    docker volume create mosquitto_log
+
     mkdir /var/lib/docker/volumes/mongodb-pri/data
     mkdir /var/lib/docker/volumes/mongodb-sec/data
 
@@ -55,7 +61,7 @@ Vagrant.configure("2") do |config|
 
   # Wait dockers to start
     sleep 10
-    while [ "$(docker ps -q|wc -l)" -ne "5" ]; do echo "Waiting for dockers to start";sleep 1; done
+    while [ "$(docker ps -q|wc -l)" -ne "6" ]; do echo "Waiting for dockers to start";sleep 1; done
   # Make the Replica
     mongo --quiet --eval 'rs.initiate({_id : "replica01", members : [{_id : 0, host : "10.30.20.10:27017",priority : 10},{_id : 1, host : "10.30.20.11:27017",priority : 5}]})'
   # Wait Mongo cluster to start
