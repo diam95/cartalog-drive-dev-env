@@ -5,7 +5,7 @@ services:
         restart: always
         image: redis
         networks:
-            bbnetwork:
+            cartalog_network:
                 ipv4_address: "10.30.20.20"
         ports:
             - "6379:6379"
@@ -18,7 +18,7 @@ services:
             - mongodb-pri:/data/db
             - /home/vagrant/mongod.conf:/etc/mongod.conf
         networks:
-            bbnetwork:
+            cartalog_network:
                 ipv4_address: "10.30.20.10"
         ports:
             - "27017:27017"
@@ -31,7 +31,7 @@ services:
             - mongodb-sec:/data/db
             - /home/vagrant/mongod.conf:/etc/mongod.conf
         networks:
-            bbnetwork:
+            cartalog_network:
                 ipv4_address: "10.30.20.11"
         ports:
             - "27018:27017"
@@ -39,7 +39,7 @@ services:
         restart: always
         image: 76077e6/dev:2.0
         networks:
-            bbnetwork:
+            cartalog_network:
                 ipv4_address: "10.30.20.100"
         ports:
             - "22022:22"
@@ -50,7 +50,7 @@ services:
         extra_hosts:
             - "bbhub.local:10.30.20.100"
         networks:
-            bbnetwork:
+            cartalog_network:
                 ipv4_address: "10.30.20.101"
         ports:
             - "22023:22"
@@ -68,10 +68,10 @@ services:
         extra_hosts:
             - "bbhub.local:10.30.20.100"
         networks:
-            bbnetwork:
+            cartalog_network:
                 ipv4_address: "10.30.20.102"
 networks:
-    bbnetwork:
+    cartalog_network:
         ipam:
             driver: default
             config:
